@@ -36,9 +36,9 @@ def test_blocker_overrides_high_score() -> None:
     assert result.decision.value == "DO_NOT_APPLY"
 
 
-def test_unknown_reduces_confidence_not_known_fit() -> None:
+def test_unknown_reduces_confidence_and_gets_no_fit_points() -> None:
     job = JobPosting("linkedin", "1", "url", None, None, None, None, None, "Python", "h")
     result = score_fit(job, (_result(Decimal(1)), _result(None)), load_engine_config(),
                        date(2026, 9, 11), Decimal(1), ())
-    assert result.fit_score == 100
+    assert result.fit_score == 50
     assert result.confidence_score < 100

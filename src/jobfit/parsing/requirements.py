@@ -37,7 +37,10 @@ LANGUAGE_TERMS = ("english", "czech", "hebrew", "russian", "french")
 
 
 def _key(text: str) -> str:
-    return unicodedata.normalize("NFKC", text).strip().rstrip(":").casefold()
+    normalized = unicodedata.normalize("NFKC", text)
+    normalized = normalized.replace("’", "'").replace("‘", "'")
+    normalized = re.sub(r"^[^\w]+", "", normalized)
+    return normalized.strip().rstrip(":").casefold()
 
 
 def _component(req_type: RequirementType, text: str) -> ScoreComponent:

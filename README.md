@@ -43,9 +43,10 @@ Successful evaluation returns exit code 0 even when the decision is
 ## Evidence and determinism
 
 `profiles/master_profile.yaml` is the source used at runtime. Missing skills are
-`UNKNOWN`; only an explicit `NONE` is a verified gap. Fit is calculated from
-determined evidence, while Confidence measures coverage and parser/matcher
-quality. Hard blockers are evaluated separately from the numeric Fit.
+`UNKNOWN`; only an explicit `NONE` is a verified gap. `UNKNOWN` does not create
+a blocker, but it earns no Fit points. Fit uses verified evidence, while
+Confidence measures coverage and parser/matcher quality. Hard blockers are
+evaluated separately from the numeric Fit.
 
 For the same profile, rules, content hash and `--as-of` date, output is stable.
 Live web content can change, so fetched pages are cached as immutable snapshots

@@ -66,3 +66,44 @@ def test_footer_text_stops_active_requirement_section() -> None:
         )
     )
     assert [item.raw_text for item in requirements] == ["Docker"]
+
+
+def test_linkedin_about_you_and_stack_sections() -> None:
+    requirements, quality = parse_requirements(
+        _job(
+            "What You’ll Be Working On\n"
+            "- Build backend services\n"
+            "💪 About You\n"
+            "You have production experience in TypeScript/Node.js or Go\n"
+            "- Solid knowledge of PostgreSQL\n"
+            "Nice to have:\n"
+            "- Docker\n"
+            "Our Stack\n"
+            "TypeScript, Node.js, Go, PostgreSQL, Docker\n"
+            "What We Offer\n"
+            "Flexible working hours\n"
+        )
+    )
+
+    assert quality == 1
+    assert [item.requirement_type for item in requirements] == [
+        RequirementType.CORE_RESPONSIBILITY,
+        RequirementType.MANDATORY,
+        RequirementType.MANDATORY,
+        RequirementType.PREFERRED,
+    ]
+    assert [item.raw_text for item in requirements] == [
+        "Build backend services",
+        "You have production experience in TypeScript/Node.js or Go",
+        "Solid knowledge of PostgreSQL",
+        "Docker",
+    ]
+
+    matcher = SkillMatcher(load_skill_definitions())
+    language_requirement = matcher.attach(requirements[1])
+    assert language_requirement.expression_op is ExpressionOp.ANY
+    assert [item.skill_id for item in language_requirement.mentions] == [
+        "typescript",
+        "nodejs",
+        "go",
+    ]

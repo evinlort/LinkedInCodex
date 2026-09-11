@@ -41,7 +41,9 @@ def score_fit(
         relevant = [item for item in results if item.requirement.component is component]
         known = [item.score for item in relevant if item.score is not None]
         weight = config.component_weights[component]
-        ratio = _average(known) if known else None
+        # UNKNOWN is not a verified gap, but it also is not proof of a fit.
+        # Give points only for requirements supported by profile evidence.
+        ratio = sum(known, Decimal(0)) / Decimal(len(relevant)) if relevant else None
         awarded = weight * ratio if ratio is not None else None
         if awarded is not None:
             weighted_total += awarded
@@ -57,8 +59,9 @@ def score_fit(
             )
         )
     fit_score = _round(Decimal(100) * weighted_total / active_weight) if active_weight else None
-    determined_by_component = {
-        component.component: component.determined_count for component in components
+    requirements_by_component = {
+        component.component: component.determined_count + component.unknown_count
+        for component in components
     }
     scored_results = tuple(
         replace(
@@ -68,7 +71,7 @@ def score_fit(
                 * config.component_weights[item.requirement.component]
                 / active_weight
                 * item.score
-                / Decimal(determined_by_component[item.requirement.component])
+                / Decimal(requirements_by_component[item.requirement.component])
                 if item.score is not None and active_weight
                 else None
             ),

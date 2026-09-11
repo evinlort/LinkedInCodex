@@ -55,6 +55,7 @@ skills:
   - {id: laravel, name: Laravel, aliases: [Laravel]}
   - {id: magento2, name: Magento 2, aliases: [Magento 2, Magento]}
   - {id: javascript, name: JavaScript, aliases: [JavaScript, JS]}
+  - {id: typescript, name: TypeScript, aliases: [TypeScript]}
   - {id: nodejs, name: Node.js, aliases: [Node.js, NodeJS]}
   - {id: react, name: React, aliases: [React, React.js], ambiguous: true, positive_context: [javascript, frontend, front-end, js, framework]}
   - {id: html, name: HTML, aliases: [HTML]}
@@ -71,7 +72,7 @@ skills:
     name: Go
     aliases: [Go, Golang]
     ambiguous: true
-    positive_context: [developer, engineer, programming, language, experience with, experience in, written in, golang]
+    positive_context: [developer, engineer, programming, language, experience with, experience in, written in, golang, typescript, node.js, nodejs]
     negative_context: [go live, ready to go, go to]
   - {id: rust, name: Rust, aliases: [Rust], ambiguous: true, positive_context: [developer, engineer, programming, language]}
   - {id: ruby, name: Ruby, aliases: [Ruby], ambiguous: true, positive_context: [developer, engineer, programming, rails, language]}
@@ -79,4 +80,3 @@ skills:
   - {id: mentoring, name: Mentoring, aliases: [mentoring, mentor engineers, coach engineers], category: competency}
   - {id: people_management, name: People management, aliases: [people management, direct reports, manage a team], category: competency}
   - {id: architecture_design, name: Architecture design, aliases: [architecture design, system design, solution design], category: competency}
-

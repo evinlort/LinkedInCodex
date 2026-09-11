@@ -8,6 +8,7 @@ preferred_terms: [nice to have, preferred, bonus, výhodou]
 example_terms: [such as, e.g., for example, například, např.]
 alternative_terms: [or, nebo]
 stop_terms:
+  - our stack
   - for any questions
   - equal opportunity employer
   - prohibits discrimination

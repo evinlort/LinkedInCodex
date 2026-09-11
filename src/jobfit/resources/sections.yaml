@@ -3,6 +3,7 @@ mandatory:
   - qualifications
   - must have
   - what you need
+  - about you
   - požadavky
   - kvalifikace
   - požadujeme
@@ -10,6 +11,8 @@ core_responsibility:
   - responsibilities
   - what you'll do
   - what you will do
+  - what you'll be working on
+  - what you will be working on
   - náplň práce
   - co budete dělat
 preferred:
@@ -22,4 +25,3 @@ context:
   - benefits
   - what we offer
   - nabízíme
-
