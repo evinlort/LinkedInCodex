@@ -1,0 +1,10 @@
+depth_terms:
+  EXPERT: [deep expertise, expert, extensive, hluboké znalosti, expert]
+  STRONG: [strong, solid, proficient, advanced, pokročilá, pokročilé, velmi dobrá]
+  WORKING: [experience, hands-on, practical, zkušenosti, praxe]
+  EXPOSURE: [familiarity, basic, exposure, základní, povědomí]
+mandatory_terms: [must, required, minimum, at least, požadujeme, nutné, minimálně]
+preferred_terms: [nice to have, preferred, bonus, výhodou]
+example_terms: [such as, e.g., for example, například, např.]
+alternative_terms: [or, nebo]
+

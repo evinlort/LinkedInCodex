@@ -1,0 +1,9 @@
+Požadavky:
+- Minimálně 5 let praxe v software development
+- Pokročilé Python zkušenosti
+- Czech C1
+Náplň práce:
+- Vývoj microservices a REST API
+Výhodou:
+- Kubernetes
+

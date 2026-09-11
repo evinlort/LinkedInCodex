@@ -1,0 +1,10 @@
+edges:
+  - {source: amazon_s3, target: aws, relation: part_of, score_factor: 0.80, scorable: true}
+  - {source: amazon_ec2, target: aws, relation: part_of, score_factor: 0.80, scorable: true}
+  - {source: flask, target: python, relation: ecosystem_of, score_factor: 0.75, scorable: false}
+  - {source: fastapi, target: python, relation: ecosystem_of, score_factor: 0.75, scorable: false}
+  - {source: postgresql, target: sql, relation: is_a, score_factor: 0.85, scorable: true}
+  - {source: mysql, target: sql, relation: is_a, score_factor: 0.85, scorable: true}
+  - {source: sqlite, target: sql, relation: is_a, score_factor: 0.85, scorable: true}
+  - {source: gitlab_ci, target: cicd, relation: is_a, score_factor: 0.80, scorable: true}
+

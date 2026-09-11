@@ -1,0 +1,31 @@
+component_weights:
+  mandatory_role: 50
+  core_responsibilities: 20
+  seniority: 10
+  domain: 10
+  compatibility: 5
+  preferred: 5
+decision_thresholds:
+  excellent: 85
+  good: 70
+  borderline: 50
+  weak: 35
+  manual_review_confidence: 70
+confidence_weights:
+  mandatory_coverage: 0.30
+  overall_coverage: 0.25
+  parser_certainty: 0.20
+  section_quality: 0.15
+  matcher_quality: 0.10
+matcher_quality:
+  EXACT: 1.0
+  CONTEXT_EXACT: 0.95
+  TAXONOMY: 0.85
+  FUZZY: 0.60
+  RULE: 1.0
+network:
+  max_bytes: 5242880
+  connect_timeout_seconds: 5
+  read_timeout_seconds: 20
+  max_redirects: 3
+

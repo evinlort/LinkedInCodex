@@ -1,0 +1,283 @@
+schema_version: 1
+profile_id: evgeny_grebnev_2026_v2
+
+source_metadata:
+  primary:
+    file: Evgeny_Grebnev_Master_Career_Skills_Profile_v2.pdf
+    sha256: 702f4fbf1ccf75062a0a85db806e8caf4fae9c12d0bec55b97e88ce02c80c5e4
+    version: 2
+    consolidated: 2026-09
+  secondary:
+    file: Evgeny_Grebnev_CV_General_2026.pdf
+    sha256: 845db4f041f984309f9569593493f200d8335a71dbb82f2239e9735aa1d16718
+
+career:
+  start: 2015-07
+  python_backend_start: 2018-07
+
+location:
+  current_country: IL
+  current_city: Dimona
+  relocation_targets: [Prague, CZ]
+
+citizenship: [IL]
+
+legal_statuses:
+  CZ:
+    labor_market_access: FREE_ACCESS
+    work_permit_required: false
+    residence_authorization: REQUIRED
+    current_residence_authorization: UNKNOWN
+    verified_on: 2026-09-11
+    review_due_month: 2027-03
+    evidence:
+      - Israeli citizens have free access to the Czech labour market; no work permit is required.
+      - Residence authorization remains separately required.
+
+languages:
+  english: {stated_level: working proficiency}
+  hebrew: {stated_level: native}
+  russian: {stated_level: native}
+  czech: {stated_level: A1, cefr: A1}
+  french: {stated_level: elementary}
+
+education:
+  - institution: Tech College Beer Sheva
+    credential: Practical Engineer
+    field: Software Development
+    start_year: 2008
+    end_year: 2010
+
+ignored_entries:
+  - AWS Infinidash
+  - "python :) (Professional Working)"
+  - "Infinidash and python :) (Professional Working)"
+
+skills:
+  python:
+    state: VERIFIED
+    depth: STRONG
+    experience_since: 2018-07
+    evidence: [Production Python backend, microservices and internal tooling since July 2018.]
+  flask:
+    state: VERIFIED
+    depth: STRONG
+    experience_since: 2018-07
+    evidence: [Flask microservices at Wallter and practical use at Infinidat.]
+  rest_api:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Backend APIs and Jira, GitLab and external database integrations.]
+  system_integration:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Backend, service and engineering workflow integrations.]
+  microservices:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Built Python 3 microservices from scratch at Wallter.]
+    recency: EARLIER_RELEVANT
+  rabbitmq:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Inter-service messaging and current runner/executor messaging path.]
+  postgresql:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Production SQL, migrations, orchestration data path and troubleshooting.]
+  sql:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Production SQL queries, migrations and troubleshooting.]
+  mongodb:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Production document storage at Wallter.]
+    recency: EARLIER_RELEVANT
+  mysql:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Production application data at Wallter.]
+    recency: EARLIER_RELEVANT
+  redis:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [System-part lookup at Infinidat and earlier caching at Wallter.]
+  linux:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Daily engineering and production troubleshooting environment.]
+  bash:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Reads, changes, writes and debugs production Bash tools.]
+  pytest:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Uses pytest for own code and unit/integration testing.]
+  unit_testing:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Verified unit testing practice.]
+  integration_testing:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Verified integration testing practice.]
+  git:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Daily Git usage and merge-request review.]
+  code_review:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Reviews colleagues' merge requests daily.]
+  gitlab_ci:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [CI usage and simple .gitlab-ci.yml changes.]
+    boundary_note: Not CI/CD platform architecture ownership.
+  ansible:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Used in deployment flows after merge requests.]
+  docker:
+    state: LIMITED
+    depth: EXPOSURE
+    evidence: [Local Docker and docker-compose use; actively learning.]
+    boundary_note: Do not claim advanced container expertise.
+  docker_compose:
+    state: LIMITED
+    depth: EXPOSURE
+    evidence: [Local docker-compose use; actively learning.]
+  aws:
+    state: LIMITED
+    depth: EXPOSURE
+    evidence: [Earlier S3 use and minimal EC2 interaction.]
+    boundary_note: Do not claim broad AWS expertise.
+  amazon_s3:
+    state: LIMITED
+    depth: EXPOSURE
+    evidence: [Amazon S3 used at Wallter.]
+    recency: EARLIER_LIMITED
+  amazon_ec2:
+    state: LIMITED
+    depth: EXPOSURE
+    evidence: [Minimal EC2 interaction.]
+    recency: EARLIER_LIMITED
+  mcp:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Built custom MCP servers and engineering workflows.]
+  fastmcp:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Built custom Python MCP servers using FastMCP.]
+  jira_api:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Built Jira API integrations for coding-agent workflows.]
+  gitlab_api:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Built GitLab API integrations for coding-agent workflows.]
+  developer_tooling:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [End-to-end internal engineering tools used by other engineers.]
+  production_troubleshooting:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Scheduled on-call, incident triage and root-cause analysis.]
+  system_diagnostics:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Designed and improved hardware and system diagnostic tools.]
+  nvme:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Designed and implemented an NVMe enclosure SDK and CLI.]
+  sas:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Built and improved SAS diagnostics.]
+  hardware_validation:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [Current tooling for hardware validation and manufacturing flows.]
+  sdk_design:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [End-to-end design and implementation of the Nebula SDK/CLI.]
+  cli_design:
+    state: VERIFIED
+    depth: STRONG
+    evidence: [End-to-end design and implementation of internal CLI tooling.]
+  threading:
+    state: VERIFIED
+    depth: EXPOSURE
+    evidence: [Python threading has been used professionally.]
+  multiprocessing:
+    state: VERIFIED
+    depth: EXPOSURE
+    evidence: [Python multiprocessing has been used professionally.]
+  payments:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Built payment/backend integrations including SEPA workflows.]
+    recency: EARLIER_RELEVANT
+  sepa:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Built a service sending customer payments through SEPA workflows.]
+    recency: EARLIER_RELEVANT
+  php:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Several years of production PHP development.]
+    recency: LEGACY
+  laravel:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Production Laravel platform support and development.]
+    recency: LEGACY
+  magento2:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Production Magento 2 development and maintenance.]
+    recency: LEGACY
+  javascript:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Earlier production full-stack work.]
+    recency: LEGACY
+  html:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Earlier production full-stack work.]
+    recency: LEGACY
+  css:
+    state: VERIFIED
+    depth: WORKING
+    evidence: [Earlier production full-stack work.]
+    recency: LEGACY
+  kubernetes:
+    state: NONE
+    depth: NONE
+    evidence: [Explicitly no Kubernetes experience.]
+  cpp:
+    state: NONE
+    depth: NONE
+    evidence: [Explicitly no practical C++ experience.]
+  windows:
+    state: NONE
+    depth: NONE
+    evidence: [No meaningful Windows use since 2008.]
+  mentoring:
+    state: NONE
+    depth: NONE
+    evidence: [No mentoring experience reported.]
+  people_management:
+    state: NONE
+    depth: NONE
+    evidence: [No management or direct-report experience reported.]
+

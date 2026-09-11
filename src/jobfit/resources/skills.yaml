@@ -1,0 +1,82 @@
+skills:
+  - {id: python, name: Python, aliases: [Python, Python 3]}
+  - {id: flask, name: Flask, aliases: [Flask]}
+  - {id: fastapi, name: FastAPI, aliases: [FastAPI]}
+  - {id: sqlalchemy, name: SQLAlchemy, aliases: [SQLAlchemy]}
+  - {id: sphinx, name: Sphinx, aliases: [Sphinx], ambiguous: true, positive_context: [documentation, python, docs]}
+  - {id: rest_api, name: REST APIs, aliases: [REST API, REST APIs, RESTful API, RESTful APIs]}
+  - {id: system_integration, name: System integration, aliases: [system integration, backend integration, integrations]}
+  - {id: microservices, name: Microservices, aliases: [microservice, microservices]}
+  - {id: rabbitmq, name: RabbitMQ, aliases: [RabbitMQ]}
+  - {id: postgresql, name: PostgreSQL, aliases: [PostgreSQL, Postgres], fuzzy_enabled: true}
+  - {id: sql, name: SQL, aliases: [SQL]}
+  - {id: sqlite, name: SQLite, aliases: [SQLite]}
+  - {id: mongodb, name: MongoDB, aliases: [MongoDB]}
+  - {id: mysql, name: MySQL, aliases: [MySQL]}
+  - {id: redis, name: Redis, aliases: [Redis]}
+  - {id: linux, name: Linux, aliases: [Linux]}
+  - {id: windows, name: Windows, aliases: [Windows]}
+  - {id: bash, name: Bash, aliases: [Bash, shell scripting]}
+  - {id: pytest, name: pytest, aliases: [pytest]}
+  - {id: unit_testing, name: Unit testing, aliases: [unit testing, unit tests]}
+  - {id: integration_testing, name: Integration testing, aliases: [integration testing, integration tests]}
+  - {id: git, name: Git, aliases: [Git]}
+  - {id: code_review, name: Code review, aliases: [code review, merge request review]}
+  - {id: gitlab_ci, name: GitLab CI, aliases: [GitLab CI, GitLab CI/CD, .gitlab-ci.yml]}
+  - {id: cicd, name: CI/CD, aliases: [CI/CD, continuous integration, continuous delivery]}
+  - {id: ansible, name: Ansible, aliases: [Ansible]}
+  - {id: docker, name: Docker, aliases: [Docker], fuzzy_enabled: true}
+  - {id: docker_compose, name: docker-compose, aliases: [docker-compose, Docker Compose]}
+  - {id: kubernetes, name: Kubernetes, aliases: [Kubernetes, K8s]}
+  - {id: aws, name: AWS, aliases: [AWS, Amazon Web Services]}
+  - {id: amazon_s3, name: Amazon S3, aliases: [Amazon S3, AWS S3, S3]}
+  - {id: amazon_ec2, name: Amazon EC2, aliases: [Amazon EC2, AWS EC2, EC2]}
+  - {id: azure, name: Microsoft Azure, aliases: [Azure, Microsoft Azure]}
+  - {id: gcp, name: Google Cloud Platform, aliases: [GCP, Google Cloud Platform]}
+  - {id: mcp, name: MCP, aliases: [MCP, Model Context Protocol]}
+  - {id: fastmcp, name: FastMCP, aliases: [FastMCP]}
+  - {id: jira_api, name: Jira API, aliases: [Jira API]}
+  - {id: gitlab_api, name: GitLab API, aliases: [GitLab API]}
+  - {id: developer_tooling, name: Developer tooling, aliases: [developer tooling, developer tools, internal engineering tools]}
+  - {id: production_troubleshooting, name: Production troubleshooting, aliases: [production troubleshooting, incident triage, root-cause analysis, root cause analysis, on-call]}
+  - {id: system_diagnostics, name: System diagnostics, aliases: [system diagnostics, diagnostic tools, diagnostics]}
+  - {id: nvme, name: NVMe, aliases: [NVMe]}
+  - {id: sas, name: SAS, aliases: [SAS], ambiguous: true, positive_context: [storage, drive, hardware, enclosure]}
+  - {id: hardware_validation, name: Hardware validation, aliases: [hardware validation, hardware testing]}
+  - {id: sdk_design, name: SDK design, aliases: [SDK design, SDK development, SDK]}
+  - {id: cli_design, name: CLI design, aliases: [CLI design, command-line tool, command line tool, CLI]}
+  - {id: threading, name: Threading, aliases: [threading, multithreading]}
+  - {id: multiprocessing, name: Multiprocessing, aliases: [multiprocessing]}
+  - {id: payments, name: Payments, aliases: [payments, payment systems], category: domain}
+  - {id: sepa, name: SEPA, aliases: [SEPA], category: domain}
+  - {id: ecommerce, name: E-commerce, aliases: [e-commerce, ecommerce], category: domain}
+  - {id: embedded, name: Embedded development, aliases: [embedded development, embedded systems], category: domain}
+  - {id: php, name: PHP, aliases: [PHP]}
+  - {id: laravel, name: Laravel, aliases: [Laravel]}
+  - {id: magento2, name: Magento 2, aliases: [Magento 2, Magento]}
+  - {id: javascript, name: JavaScript, aliases: [JavaScript, JS]}
+  - {id: nodejs, name: Node.js, aliases: [Node.js, NodeJS]}
+  - {id: react, name: React, aliases: [React, React.js], ambiguous: true, positive_context: [javascript, frontend, front-end, js, framework]}
+  - {id: html, name: HTML, aliases: [HTML]}
+  - {id: css, name: CSS, aliases: [CSS]}
+  - {id: cpp, name: C++, aliases: [C++]}
+  - {id: c, name: C, aliases: [C], ambiguous: true, positive_context: [programming, developer, engineer, language, embedded]}
+  - {id: csharp, name: C#, aliases: [C#]}
+  - {id: fsharp, name: F#, aliases: [F#]}
+  - {id: dotnet, name: .NET, aliases: [.NET, dotnet]}
+  - {id: aspnet, name: ASP.NET, aliases: [ASP.NET]}
+  - {id: objective_c, name: Objective-C, aliases: [Objective-C]}
+  - {id: power_bi, name: Power BI, aliases: [Power BI]}
+  - id: go
+    name: Go
+    aliases: [Go, Golang]
+    ambiguous: true
+    positive_context: [developer, engineer, programming, language, experience with, experience in, written in, golang]
+    negative_context: [go live, ready to go, go to]
+  - {id: rust, name: Rust, aliases: [Rust], ambiguous: true, positive_context: [developer, engineer, programming, language]}
+  - {id: ruby, name: Ruby, aliases: [Ruby], ambiguous: true, positive_context: [developer, engineer, programming, rails, language]}
+  - {id: swift, name: Swift, aliases: [Swift], ambiguous: true, positive_context: [ios, developer, engineer, programming, language]}
+  - {id: mentoring, name: Mentoring, aliases: [mentoring, mentor engineers, coach engineers], category: competency}
+  - {id: people_management, name: People management, aliases: [people management, direct reports, manage a team], category: competency}
+  - {id: architecture_design, name: Architecture design, aliases: [architecture design, system design, solution design], category: competency}
+

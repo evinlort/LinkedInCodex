@@ -1,0 +1,14 @@
+schema_version: 1
+profile_id: synthetic
+source_metadata: {}
+career: {start: 2020-01}
+location: {current_country: CZ, current_city: Prague, relocation_targets: []}
+citizenship: [CZ]
+legal_statuses: {}
+languages: {english: {stated_level: native}}
+education: []
+ignored_entries: ["python :) (Professional Working)"]
+skills:
+  python: {state: VERIFIED, depth: STRONG, evidence: [Synthetic evidence.]}
+  kubernetes: {state: NONE, depth: NONE, evidence: [Synthetic explicit gap.]}
+

@@ -1,0 +1,12 @@
+Requirements:
+- 5+ years of software development
+- Strong Python experience
+- PostgreSQL and RabbitMQ
+- Candidate must be eligible to work in Czechia
+Responsibilities:
+- Build microservices and REST APIs
+- Perform production troubleshooting
+Nice to Have:
+- Solid Docker skills
+- C++
+
