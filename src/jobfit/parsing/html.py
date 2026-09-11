@@ -55,6 +55,14 @@ def _meta(soup: BeautifulSoup, *keys: str) -> str | None:
     return None
 
 
+def _first_selector(soup: BeautifulSoup, selectors: tuple[str, ...]) -> Any:
+    for selector in selectors:
+        node = soup.select_one(selector)
+        if node is not None:
+            return node
+    return None
+
+
 def extract_job_posting(document: FetchedDocument) -> JobPosting:
     if document.content_type == "text/plain":
         return JobPosting(
@@ -105,7 +113,7 @@ def extract_job_posting(document: FetchedDocument) -> JobPosting:
                     },
                 )
 
-    title_node = soup.find("h1")
+    title_node = soup.select_one("h1, .top-card-layout__title, .topcard__title")
     title: str | None = (
         title_node.get_text(" ", strip=True) if title_node else _meta(soup, "og:title")
     )
@@ -113,8 +121,15 @@ def extract_job_posting(document: FetchedDocument) -> JobPosting:
     company = company_node.get_text(" ", strip=True) if company_node else None
     location_node = soup.select_one("[itemprop='jobLocation'], .topcard__flavor--bullet")
     location: str | None = location_node.get_text(" ", strip=True) if location_node else None
-    description_node = soup.select_one(
-        "[itemprop='description'], .show-more-less-html__markup, .description__text, main, article"
+    description_node = _first_selector(
+        soup,
+        (
+            "[itemprop='description']",
+            ".show-more-less-html__markup",
+            ".description__text",
+            "article",
+            "main",
+        ),
     )
     semantic_description = (
         description_node.get_text("\n", strip=True) if description_node else None

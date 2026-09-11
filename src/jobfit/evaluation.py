@@ -209,8 +209,10 @@ def _language_result(
             reason = f"Verified {candidate.cefr}; vacancy requires {required}"
         else:
             reason = f"Profile level '{candidate.stated_level}' has no verified CEFR mapping"
-    elif "fluent" in folded and candidate.stated_level.casefold() not in {"native", "fluent"}:
-        reason = f"Profile states {candidate.stated_level}, not a verified fluent level"
+    elif any(term in folded for term in ("fluent", "excellent")) and (
+        candidate.stated_level.casefold() not in {"native", "fluent", "excellent"}
+    ):
+        reason = f"Profile states {candidate.stated_level}, not the requested verified level"
     else:
         score = Decimal(1)
         reason = f"Verified language level: {candidate.stated_level}"

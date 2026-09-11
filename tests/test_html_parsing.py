@@ -26,4 +26,4 @@ def test_semantic_fallback() -> None:
     job = extract_job_posting(_document("linkedin_semantic.html"))
     assert job.title == "Backend Engineer"
     assert job.company == "Semantic Co"
-
+    assert "Similar jobs" not in job.raw_description

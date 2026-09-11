@@ -4,6 +4,7 @@ import hashlib
 from urllib.parse import urljoin, urlsplit
 
 import httpx
+from bs4 import BeautifulSoup
 
 from jobfit.cache import JobCache
 from jobfit.config import EngineConfig
@@ -31,6 +32,32 @@ class LinkedInPublicJobSource:
             if cached is not None:
                 return cached
 
+        try:
+            content = self._download(locator.url)
+            if self._looks_restricted(content):
+                raise AccessRestrictedError("LinkedIn returned an authentication wall")
+        except AccessRestrictedError:
+            guest_url = (
+                "https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/"
+                f"{locator.source_id}"
+            )
+            content = self._download(guest_url)
+            if self._looks_restricted(content):
+                raise AccessRestrictedError(
+                    "LinkedIn public and guest pages both require authentication"
+                ) from None
+
+        document = FetchedDocument(
+            source="linkedin",
+            source_id=locator.source_id,
+            url=locator.url,
+            content=content,
+            content_type="text/html",
+            content_hash=hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        )
+        return document if self.no_cache else self.cache.put(document)
+
+    def _download(self, url: str) -> str:
         timeout = httpx.Timeout(
             connect=self.config.network["connect_timeout_seconds"],
             read=self.config.network["read_timeout_seconds"],
@@ -43,7 +70,7 @@ class LinkedInPublicJobSource:
                 follow_redirects=False,
                 headers={"User-Agent": "jobfit/0.1 (+deterministic public-job reader)"},
             ) as client:
-                current_url = locator.url
+                current_url = url
                 chunks: list[bytes] | None = None
                 for redirect_count in range(self.config.network["max_redirects"] + 1):
                     with client.stream("GET", current_url) as response:
@@ -89,17 +116,26 @@ class LinkedInPublicJobSource:
         except httpx.HTTPError as exc:
             raise SourceError(f"Cannot retrieve public LinkedIn job: {exc}") from exc
 
-        raw = b"".join(chunks)
-        content = raw.decode("utf-8", errors="replace")
-        folded = content.casefold()
-        if any(marker in folded for marker in ("captcha", "authwall", "sign in to view")):
-            raise AccessRestrictedError("LinkedIn returned an authentication or CAPTCHA page")
-        document = FetchedDocument(
-            source="linkedin",
-            source_id=locator.source_id,
-            url=locator.url,
-            content=content,
-            content_type="text/html",
-            content_hash=hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        return b"".join(chunks).decode("utf-8", errors="replace")
+
+    @staticmethod
+    def _looks_restricted(content: str) -> bool:
+        soup = BeautifulSoup(content, "html.parser")
+        if soup.select_one(
+            "[itemprop='description'], .show-more-less-html__markup, .description__text"
+        ):
+            return False
+        for script in soup.find_all("script", attrs={"type": "application/ld+json"}):
+            if "JobPosting" in (script.string or script.get_text()):
+                return False
+        if soup.select_one(".authwall, #captcha-challenge, iframe[src*='captcha']"):
+            return True
+        folded = soup.get_text(" ", strip=True).casefold()
+        return any(
+            marker in folded
+            for marker in (
+                "sign in to view this job",
+                "join linkedin to view this job",
+                "security verification",
+            )
         )
-        return document if self.no_cache else self.cache.put(document)

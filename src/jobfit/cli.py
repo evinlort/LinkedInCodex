@@ -14,7 +14,7 @@ from jobfit.reporting import render_json, render_text
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Deterministic LinkedIn job-fit evaluator")
-    parser.add_argument("url", help="Public LinkedIn job URL")
+    parser.add_argument("url", help="Public LinkedIn job URL or numeric job ID")
     inputs = parser.add_mutually_exclusive_group()
     inputs.add_argument("--html", type=Path, help="Use a saved UTF-8 HTML page")
     inputs.add_argument("--text", type=Path, help="Use a saved UTF-8 job description")

@@ -56,3 +56,13 @@ def test_job_gets_structured_sections() -> None:
     assert structured.responsibilities == ("Build APIs",)
     assert structured.preferred_requirements == ("Docker",)
     assert structured.benefits == ("Five weeks leave",)
+
+
+def test_footer_text_stops_active_requirement_section() -> None:
+    requirements, _ = parse_requirements(
+        _job(
+            "Nice to Have:\n- Docker\nFor any questions, send us a message.\n"
+            "Our company prohibits discrimination based on age.\n"
+        )
+    )
+    assert [item.raw_text for item in requirements] == ["Docker"]

@@ -13,6 +13,16 @@ uv run python -m jobfit \
   "https://www.linkedin.com/jobs/view/4462925691"
 ```
 
+A numeric LinkedIn Job ID works too:
+
+```bash
+uv run python -m jobfit 4462925691
+```
+
+The app first reads the normal public page. If LinkedIn returns an access wall,
+it tries LinkedIn's public guest job page for the same ID. It does not sign in,
+store cookies, solve CAPTCHA, or bypass access controls.
+
 LinkedIn may deny public access. Saved UTF-8 input is the reproducible fallback:
 
 ```bash
@@ -58,4 +68,3 @@ uv run pytest
 uv run ruff check .
 uv run mypy src/jobfit
 ```
-

@@ -83,6 +83,11 @@ def parse_requirements(job: JobPosting) -> tuple[tuple[Requirement, ...], Decima
         if not stripped:
             offset += len(source_line)
             continue
+        if any(str(term).casefold() in stripped.casefold() for term in rules["stop_terms"]):
+            current_type = None
+            current_section = None
+            offset += len(source_line)
+            continue
         heading_type = section_lookup.get(_key(stripped))
         if heading_type is not None:
             current_type = heading_type

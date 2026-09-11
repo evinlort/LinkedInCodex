@@ -14,6 +14,7 @@ from jobfit.sources import LinkedInPublicJobSource, parse_linkedin_url
         ("https://www.linkedin.com/jobs/view/4462925691", "4462925691"),
         ("https://linkedin.com/jobs/view/senior-python-engineer-4462925691/", "4462925691"),
         ("https://www.linkedin.com/jobs/view/4462925691?trackingId=x", "4462925691"),
+        ("4462925691", "4462925691"),
     ],
 )
 def test_linkedin_url(url: str, expected: str) -> None:
@@ -73,8 +74,40 @@ def test_public_source_detects_access_wall(tmp_path) -> None:
             headers={"content-type": "text/html"},
         )
     )
+    guest_url = "https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/4462925691"
+    respx.get(guest_url).mock(
+        return_value=httpx.Response(
+            200,
+            text="<div class='authwall'>Join LinkedIn to view this job</div>",
+            headers={"content-type": "text/html"},
+        )
+    )
     source = LinkedInPublicJobSource(
         load_engine_config(), JobCache(tmp_path), no_cache=True
     )
     with pytest.raises(AccessRestrictedError):
         source.fetch(locator)
+
+
+@respx.mock
+def test_public_source_uses_guest_page_after_access_wall(tmp_path) -> None:
+    locator = parse_linkedin_url("4462925691")
+    respx.get(locator.url).mock(
+        return_value=httpx.Response(
+            200,
+            text="<div class='authwall'>Sign in to view this job</div>",
+            headers={"content-type": "text/html"},
+        )
+    )
+    guest_url = "https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/4462925691"
+    respx.get(guest_url).mock(
+        return_value=httpx.Response(
+            200,
+            text="<div class='show-more-less-html__markup'>Requirements: Python</div>",
+            headers={"content-type": "text/html"},
+        )
+    )
+    source = LinkedInPublicJobSource(
+        load_engine_config(), JobCache(tmp_path), no_cache=True
+    )
+    assert "Requirements: Python" in source.fetch(locator).content

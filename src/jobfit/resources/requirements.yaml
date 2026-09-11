@@ -7,4 +7,9 @@ mandatory_terms: [must, required, minimum, at least, požadujeme, nutné, minim�
 preferred_terms: [nice to have, preferred, bonus, výhodou]
 example_terms: [such as, e.g., for example, například, např.]
 alternative_terms: [or, nebo]
-
+stop_terms:
+  - for any questions
+  - equal opportunity employer
+  - prohibits discrimination
+  - all qualified applicants
+  - privacy policy
