@@ -131,13 +131,16 @@ class SkillMatcher:
     def attach(self, requirement: Requirement) -> Requirement:
         mentions = self.find(requirement.raw_text, requirement.span.start)
         folded = requirement.raw_text.casefold()
-        if len(mentions) > 1 and (
+        is_multi_skill = len(mentions) > 1
+        is_example_list = any(term in folded for term in ("such as", "e.g.", "např."))
+        has_mixed_list_marks = "," in requirement.raw_text and "/" in requirement.raw_text
+        if is_multi_skill and (is_example_list or has_mixed_list_marks):
+            op = ExpressionOp.COMPOSITE
+        elif is_multi_skill and (
             re.search(r"\b(?:or|nebo)\b", folded) or "/" in requirement.raw_text
         ):
             op = ExpressionOp.ANY
-        elif len(mentions) > 1 and any(term in folded for term in ("such as", "e.g.", "např.")):
-            op = ExpressionOp.COMPOSITE
-        elif len(mentions) > 1 and ("," in requirement.raw_text or re.search(r"\band\b", folded)):
+        elif is_multi_skill and ("," in requirement.raw_text or re.search(r"\band\b", folded)):
             op = ExpressionOp.ALL
         elif mentions or requirement.minimum_years is not None or any(
             term in folded

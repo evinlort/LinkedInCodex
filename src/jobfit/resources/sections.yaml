@@ -4,6 +4,7 @@ mandatory:
   - must have
   - what you need
   - about you
+  - co potřebujete k úspěchu
   - požadavky
   - kvalifikace
   - požadujeme
@@ -13,6 +14,8 @@ core_responsibility:
   - what you will do
   - what you'll be working on
   - what you will be working on
+  - jakmile se k nám přidáte, budete
+  - používané technologie
   - náplň práce
   - co budete dělat
 preferred:
@@ -22,6 +25,10 @@ preferred:
   - výhodou
   - výhodou je
 context:
+  - místo
+benefits:
   - benefits
   - what we offer
   - nabízíme
+  - co nabízíme
+  - mezi hlavní benefity patří

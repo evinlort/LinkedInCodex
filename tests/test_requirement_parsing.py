@@ -34,6 +34,7 @@ def test_boolean_and_composite_expressions() -> None:
             "- Flask/FastAPI\n"
             "- PostgreSQL and RabbitMQ\n"
             "- Databases such as PostgreSQL and SQLite\n"
+            "- JavaScript, PostgreSQL, .NET / C#, Node.js\n"
         )
     )
     matcher = SkillMatcher(load_skill_definitions())
@@ -41,6 +42,7 @@ def test_boolean_and_composite_expressions() -> None:
     assert [item.expression_op for item in attached] == [
         ExpressionOp.ANY,
         ExpressionOp.ALL,
+        ExpressionOp.COMPOSITE,
         ExpressionOp.COMPOSITE,
     ]
 
@@ -107,3 +109,35 @@ def test_linkedin_about_you_and_stack_sections() -> None:
         "nodejs",
         "go",
     ]
+
+
+def test_czech_job_sections_and_benefits_are_separate() -> None:
+    job = _job(
+        "Jakmile se k nám přidáte, budete:\n"
+        "Vyvíjet kvalitní a testovaný kód.\n"
+        "Používané technologie:\n"
+        "JavaScript, PostgreSQL, .NET / C#, Node.js.\n"
+        "Místo:\n"
+        "Brno\n"
+        "Co potřebujete k úspěchu?\n"
+        "Minimálně 3 roky relevantní praxe.\n"
+        "Velmi dobrou znalost anglického jazyka.\n"
+        "Co nabízíme:\n"
+        "Možnost práce z domova.\n"
+        "Mezi hlavní benefity patří:\n"
+        "Pět dnů volna.\n"
+        "Sounds good? Send us your CV.\n"
+    )
+
+    requirements, quality = parse_requirements(job)
+    structured = structure_job(job, requirements)
+
+    assert quality == 1
+    assert [item.requirement_type for item in requirements] == [
+        RequirementType.CORE_RESPONSIBILITY,
+        RequirementType.CORE_RESPONSIBILITY,
+        RequirementType.MANDATORY,
+        RequirementType.MANDATORY,
+    ]
+    assert "Brno" not in [item.raw_text for item in requirements]
+    assert structured.benefits == ("Možnost práce z domova.", "Pět dnů volna.")

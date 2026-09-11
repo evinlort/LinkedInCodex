@@ -22,7 +22,13 @@ from jobfit.models import (
 from jobfit.profile import completed_years
 
 CEFR_RANK = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6}
-LANGUAGES = ("english", "czech", "hebrew", "russian", "french")
+LANGUAGE_PATTERNS = {
+    "english": re.compile(r"\b(?:english|anglick\w*)\b", re.IGNORECASE),
+    "czech": re.compile(r"\b(?:czech|češtin\w*|česk\w*)\b", re.IGNORECASE),
+    "hebrew": re.compile(r"\b(?:hebrew|hebrej\w*)\b", re.IGNORECASE),
+    "russian": re.compile(r"\b(?:russian|ruštin\w*|rusk\w*)\b", re.IGNORECASE),
+    "french": re.compile(r"\b(?:french|francouz\w*)\b", re.IGNORECASE),
+}
 
 
 def _status(score: Decimal | None, optional: bool, review: bool = False) -> MatchStatus:
@@ -187,7 +193,9 @@ def _language_result(
     requirement: Requirement, profile: CandidateProfile
 ) -> RequirementResult | None:
     folded = requirement.raw_text.casefold()
-    language = next((name for name in LANGUAGES if re.search(rf"\b{name}\b", folded)), None)
+    language = next(
+        (name for name, pattern in LANGUAGE_PATTERNS.items() if pattern.search(folded)), None
+    )
     if language is None:
         return None
     candidate = profile.languages.get(language)
@@ -209,7 +217,7 @@ def _language_result(
             reason = f"Verified {candidate.cefr}; vacancy requires {required}"
         else:
             reason = f"Profile level '{candidate.stated_level}' has no verified CEFR mapping"
-    elif any(term in folded for term in ("fluent", "excellent")) and (
+    elif any(term in folded for term in ("fluent", "excellent", "very good", "velmi dobr")) and (
         candidate.stated_level.casefold() not in {"native", "fluent", "excellent"}
     ):
         reason = f"Profile states {candidate.stated_level}, not the requested verified level"
@@ -421,6 +429,8 @@ def evaluate_requirement(
             score = None
         else:
             score = sum(known, Decimal(0)) / Decimal(len(known))
+    elif requirement.expression_op is ExpressionOp.COMPOSITE:
+        score = sum(known, Decimal(0)) / Decimal(len(atom_values))
     elif unknown_count:
         score = None
     elif known:

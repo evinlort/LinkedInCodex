@@ -42,3 +42,36 @@ def test_unknown_reduces_confidence_and_gets_no_fit_points() -> None:
                        date(2026, 9, 11), Decimal(1), ())
     assert result.fit_score == 50
     assert result.confidence_score < 100
+
+
+def test_seniority_alone_cannot_make_a_full_fit() -> None:
+    job = JobPosting("linkedin", "1", "url", None, None, None, None, None, "3 years", "h")
+    req = Requirement(
+        "r",
+        "3 years",
+        SourceSpan(0, 7, "3 years"),
+        "Requirements",
+        RequirementType.MANDATORY,
+        ScoreComponent.SENIORITY,
+        ExpressionOp.ATOM,
+        None,
+        Decimal(3),
+        "overall",
+        Decimal(1),
+    )
+    known = RequirementResult(req, MatchStatus.STRONG, Decimal(1), ())
+
+    result = score_fit(
+        job,
+        (known,),
+        load_engine_config(),
+        date(2026, 9, 11),
+        Decimal(1),
+        (),
+    )
+
+    assert result.fit_score is None
+    assert result.decision.value == "MANUAL_REVIEW"
+    assert result.diagnostics == (
+        "No mandatory technical or core responsibility requirements were found",
+    )

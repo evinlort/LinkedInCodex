@@ -59,6 +59,19 @@ def score_fit(
             )
         )
     fit_score = _round(Decimal(100) * weighted_total / active_weight) if active_weight else None
+    essential_components = {
+        ScoreComponent.MANDATORY_ROLE,
+        ScoreComponent.CORE_RESPONSIBILITIES,
+    }
+    has_essential_requirements = any(
+        item.requirement.component in essential_components for item in results
+    )
+    if not has_essential_requirements:
+        fit_score = None
+        diagnostics = (
+            *diagnostics,
+            "No mandatory technical or core responsibility requirements were found",
+        )
     requirements_by_component = {
         component.component: component.determined_count + component.unknown_count
         for component in components

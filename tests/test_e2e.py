@@ -54,3 +54,44 @@ def test_non_python_backend_role_does_not_get_full_fit(tmp_path: Path) -> None:
     assert result.decision is Decision.MANUAL_REVIEW
     assert stack.requirement.requirement_type is RequirementType.MANDATORY
     assert stack.status is MatchStatus.UNKNOWN
+
+
+def test_czech_mixed_stack_job_does_not_get_full_fit(tmp_path: Path) -> None:
+    job_text = tmp_path / "czech_software_engineer.txt"
+    job_text.write_text(
+        "Jakmile se k nám přidáte, budete:\n"
+        "Vyvíjet kvalitní, čistý a testovaný kód.\n"
+        "Používané technologie:\n"
+        "JavaScript, PostgreSQL, .NET / C#, Node.js, Azure, Kubernetes, GIT.\n"
+        "Místo:\n"
+        "Brno\n"
+        "Co potřebujete k úspěchu?\n"
+        "Zkušenosti s vývojem podnikového softwaru.\n"
+        "Minimálně 3 roky relevantní praxe.\n"
+        "Zkušenosti s databázemi, například PostgreSQL.\n"
+        "Velmi dobrou znalost anglického jazyka.\n"
+        "Co nabízíme:\n"
+        "Možnost práce z domova.\n",
+        encoding="utf-8",
+    )
+
+    result = evaluate_job(
+        EvaluationRequest(
+            "4452801085",
+            Path("profiles/master_profile.yaml"),
+            text_path=job_text,
+            as_of=date(2026, 9, 12),
+        )
+    )
+
+    english = next(
+        item for item in result.requirements if "anglického" in item.requirement.raw_text
+    )
+    stack = next(
+        item for item in result.requirements if ".NET / C#" in item.requirement.raw_text
+    )
+    assert result.fit_score is not None
+    assert result.fit_score < 100
+    assert result.decision is Decision.MANUAL_REVIEW
+    assert english.status is MatchStatus.UNKNOWN
+    assert stack.requirement.requirement_type is RequirementType.CORE_RESPONSIBILITY

@@ -33,20 +33,26 @@ LEGAL_TERMS = (
     "eu citizen",
     "eu citizenship",
 )
-LANGUAGE_TERMS = ("english", "czech", "hebrew", "russian", "french")
+LANGUAGE_PATTERNS = {
+    "english": re.compile(r"\b(?:english|anglick\w*)\b", re.IGNORECASE),
+    "czech": re.compile(r"\b(?:czech|češtin\w*|česk\w*)\b", re.IGNORECASE),
+    "hebrew": re.compile(r"\b(?:hebrew|hebrej\w*)\b", re.IGNORECASE),
+    "russian": re.compile(r"\b(?:russian|ruštin\w*|rusk\w*)\b", re.IGNORECASE),
+    "french": re.compile(r"\b(?:french|francouz\w*)\b", re.IGNORECASE),
+}
 
 
 def _key(text: str) -> str:
     normalized = unicodedata.normalize("NFKC", text)
     normalized = normalized.replace("’", "'").replace("‘", "'")
     normalized = re.sub(r"^[^\w]+", "", normalized)
-    return normalized.strip().rstrip(":").casefold()
+    return normalized.strip().rstrip(":?!").casefold()
 
 
 def _component(req_type: RequirementType, text: str) -> ScoreComponent:
     folded = text.casefold()
     if any(term in folded for term in LEGAL_TERMS) or any(
-        term in folded for term in LANGUAGE_TERMS
+        pattern.search(text) for pattern in LANGUAGE_PATTERNS.values()
     ):
         return ScoreComponent.COMPATIBILITY
     if YEAR_RE.search(text) or any(
@@ -69,6 +75,7 @@ def parse_requirements(job: JobPosting) -> tuple[tuple[Requirement, ...], Decima
         "core_responsibility": RequirementType.CORE_RESPONSIBILITY,
         "preferred": RequirementType.PREFERRED,
         "context": RequirementType.CONTEXT,
+        "benefits": RequirementType.CONTEXT,
     }
     for group, headings in sections.items():
         for heading in headings:
@@ -175,13 +182,17 @@ def parse_requirements(job: JobPosting) -> tuple[tuple[Requirement, ...], Decima
 
 def _benefits(text: str) -> tuple[str, ...]:
     sections = load_sections()
+    rules = load_requirement_rules()
     all_headings = {_key(item) for values in sections.values() for item in values}
-    benefit_headings = {_key(item) for item in sections["context"]}
+    benefit_headings = {_key(item) for item in sections["benefits"]}
     inside_benefits = False
     result: list[str] = []
     for line in text.splitlines():
         stripped = line.strip()
         if not stripped:
+            continue
+        if any(str(term).casefold() in stripped.casefold() for term in rules["stop_terms"]):
+            inside_benefits = False
             continue
         line_key = _key(stripped)
         if line_key in all_headings:

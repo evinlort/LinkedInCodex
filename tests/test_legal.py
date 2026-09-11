@@ -42,3 +42,11 @@ def test_mandatory_czech_c1_is_blocker(tmp_path: Path) -> None:
     result = _run(tmp_path, "Czech C1")
     assert result.requirements[0].status is MatchStatus.PARTIAL
     assert result.blockers
+
+
+def test_czech_high_english_level_needs_review(tmp_path: Path) -> None:
+    result = _run(tmp_path, "Velmi dobrou znalost anglického jazyka")
+    assert result.requirements[0].status is MatchStatus.UNKNOWN
+    assert result.requirements[0].reason == (
+        "Profile states working proficiency, not the requested verified level"
+    )
